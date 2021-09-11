@@ -1,4 +1,4 @@
-require('dotenv').config()
+//require('dotenv').config()
 const express = require('express')
 const apiRouter = require('./APIrouter')
 //const history = require('connect-history-api-fallback');
