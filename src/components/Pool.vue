@@ -14,9 +14,17 @@
             ]
 
             const ideas = ref(mock); // TODO: use []
+            const newEntry = ref('');
 
-            const addOption = (opt) => {
-                ideas.value.concat([...ideas, opt])
+            const addOption = () => {
+                const newIdea = {
+                    id: ideas.value[ideas.value.length-1].id + 1,
+                    content: newEntry.value,
+                    votes: ['me']
+                }
+                ideas.value = ideas.value.concat(newIdea)
+
+                newEntry.value = ''
             }
 
             const sortedIdeas = computed(() =>
@@ -25,13 +33,10 @@
                 )
             )
 
-            // const removeOption = () => {
-            // }
-
             return {
                 sortedIdeas,
                 addOption,
-                // removeOption,
+                newEntry,
             }
         }
     }
@@ -39,10 +44,19 @@
 
 <template>
     <div class="new-entry-container">
-        <input v-model="userInput"/>
-        <button class="user-button" @click="login">agregar</button>
+        <textarea v-model.trim="newEntry"
+            class="new-entry-textarea"
+            :placeholder="'titulo del libro\npaginas\nprecio\netc..'" 
+            rows="5"
+        />
+        <button class="new-entry-button"
+            @click="addOption"
+            :disabled="!newEntry.length"
+        >
+            agregar
+        </button>
     </div>
-    <div class="options-list">
+    <div class="ideas-list">
         <IdeaCard v-for="idea in sortedIdeas" :key="idea.id"
             v-bind="idea"
         />
@@ -52,9 +66,30 @@
 <style>
     .new-entry-container {
         margin-top: 15px;
+        display: flex;
+        justify-content: center;
     }
 
-    .options-list {
+    .new-entry-textarea {
+        resize: none;
+        width: 18rem;
+        overflow: auto;
+    }
+
+    .new-entry-button {
+        margin-left: 6px;
+        height: fit-content;
+        padding: 3px;
+    }
+
+    .ideas-list {
         margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+        
+    }
+    .ideas-list > * {
+        margin-top: 8px;
     }
 </style>
