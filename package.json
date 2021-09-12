@@ -5,8 +5,9 @@
   "scripts": {
     "postinstall": "npm run build",
     "start": "node index.js",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "serve": "vue-cli-service build",
+    "dev": "vue-cli-service serve"
   },
   "dependencies": {
     "express": "^4.17.1",
