@@ -1,11 +1,16 @@
 <script>
     import classBuilder from "../js/classBuilder";
+    // import LinkPrevue from 'link-prevue'
+    import LinkPrevue from './lprv.vue'
 
     export default {
         props: {
             id: String,
             content: String,
             votes: Array// String[]
+        },
+        components: {
+            LinkPrevue,
         },
         setup(props, context) {
             return {
@@ -17,7 +22,13 @@
 
 <template>
     <div :class="b`container`">
-        <span :class="b`content`">{{content}}</span>
+        <div :class="b`grid`">
+            <span :class="b`text`">{{content}}</span>
+            <div :class="b`right`">
+                <LinkPrevue url="https://www.goodreads.com/book/show/40961427-1984"></LinkPrevue>
+            </div>
+        </div>
+
         <div :class="b`voters-container`">
             <div :class="b`vote-btn`">
                 <span>{{votes.length}}</span>
@@ -34,9 +45,15 @@
     .idea-card_container {
         border: 1px rgb(216 215 215) solid;
         border-radius: 5px;
+        padding: 5px 15px;
     }
-    .idea-card_content {
-        white-space: pre
+    .idea-card_grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .idea-card_text {
+        white-space: pre;
+        text-align: left;
     }
     .idea-card_voter {
         font-size: 12px;
@@ -44,9 +61,9 @@
         margin-right: 5px;
     }
     .idea-card_voters-container {
+        padding-top: 5px;
         display: flex;
         align-items: center;
-        padding: 5px 15px;
     }
     .idea-card_vote-btn {
         display: flex;
@@ -59,5 +76,9 @@
     .idea-card_life-saver-icon {
         margin-left: 2px;
         height: 18px;
+    }
+    .idea-card_right {
+        display: flex;
+        justify-content: center;
     }
 </style>
