@@ -15,6 +15,14 @@
         setup(props, context) {
             const store = inject('store')
 
+            const webSocket = new WebSocket("ws://localhost:5000");
+            webSocket.onerror = function (err) {
+                console.log(err);
+            }
+            webSocket.onmessage = function (event) {
+                console.log('webSocket message:', JSON.parse(event.data));
+            }
+
             const link = computed(() => {
                 let testUrl = props.content.match(/https?:[^\s]+/)
                 return testUrl && testUrl[0];
@@ -26,10 +34,23 @@
                 props.votes.includes(store.user)
             )
 
+            function handleVote () {
+                if (selfVoted.value) {
+                    console.log('remove vote for ', props.id)
+                    webSocket.send('remove vote for '+props.id)
+                }
+                else {
+                    console.log('voting for ', props.id);
+                    webSocket.send('voting for '+props.id)
+                }
+            }
+
+
             return {
                 b: classBuilder('idea-card'),
                 link,
                 selfVoted,
+                handleVote,
             }
         }
     }
@@ -45,7 +66,10 @@
         </div>
 
         <div :class="b`voters-container`">
-            <button :class="[b`vote-btn`, selfVoted?b`vote-btn-active`:'']" >
+            <button
+                :class="[b`vote-btn`, selfVoted?b`vote-btn-active`:'']"
+                @click="handleVote"
+            >
                 <span>{{votes.length}}</span>
                 <img :class="b`life-saver-icon`" src="red-life-saver.ico" alt="Italian Trulli">
             </button>
