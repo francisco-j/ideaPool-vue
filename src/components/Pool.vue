@@ -8,7 +8,7 @@
             const mock = [
                 {
                     id: "001",
-                    content: "text",
+                    content: "1984 by George Orwell https://www.goodreads.com/book/show/40961427-1984",
                     votes: ['Juan', 'Ana']
                 }
             ]
