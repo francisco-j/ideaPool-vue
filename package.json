@@ -6,8 +6,8 @@
     "postinstall": "npm run build",
     "start": "node index.js",
     "build": "vue-cli-service build",
-    "serve": "vue-cli-service build",
-    "dev": "vue-cli-service serve"
+    "dev:vue": "vue-cli-service serve",
+    "dev:node": "nodemon index.js"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -15,7 +15,8 @@
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0"
+    "@vue/compiler-sfc": "^3.0.0",
+    "nodemon": "^2.0.12"
   },
   "browserslist": [
     "> 1%",
