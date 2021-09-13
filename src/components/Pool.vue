@@ -29,7 +29,7 @@
 
             const sortedIdeas = computed(() =>
                 ideas.value.sort((optionA, optionB) => 
-                    optionA.votes > optionB.votes
+                    optionB.votes.length - optionA.votes.length
                 )
             )
 
