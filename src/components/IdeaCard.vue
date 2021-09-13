@@ -15,7 +15,11 @@
         setup(props, context) {
             const store = inject('store')
 
-            const webSocket = new WebSocket("ws://localhost:5000");
+            const wssUrl = location.origin.includes('https:')
+                ? location.origin.replace('https:', 'ws:')
+                : 'ws://localhost:5000'
+
+            const webSocket = new WebSocket(wssUrl);
             webSocket.onerror = function (err) {
                 console.log(err);
             }
