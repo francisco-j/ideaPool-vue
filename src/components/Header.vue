@@ -46,6 +46,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        background: white;
+        position: sticky;
+        top: 0;
     }
 
     .user-button {
