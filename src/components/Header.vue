@@ -1,20 +1,22 @@
 <script>
-    import { ref } from "vue";
+    import { ref, inject } from "vue";
 
     export default {
         setup(props) {
+            const store = inject('store')
+
             const userInput = ref('');
-            const user = ref();
+
             const logout = () => {
-                user.value = null
+                store.user = null
             }
 
             const login = () => {
-                user.value = userInput.value
+                store.user = userInput.value
             }
 
             return {
-                user,
+                store,
                 userInput,
                 login,
                 logout
@@ -27,8 +29,8 @@
     <div class="header">
         <div class="logo">Idea Pool</div>
 
-        <div v-if="user">
-            <span>{{user}}</span>
+        <div v-if="store.user">
+            <span>{{store.user}}</span>
             <button class="user-button" @click="logout">logout</button>
         </div>
         <div v-else>

@@ -1,7 +1,7 @@
 <script>
     import classBuilder from "../js/classBuilder";
-    // import LinkPrevue from 'link-prevue'
-    import LinkPrevue from './lprv.vue'
+    import LinkPrevue from './lprv.vue' // from 'link-prevue'
+    import { computed, inject } from "vue";
 
     export default {
         props: {
@@ -13,8 +13,23 @@
             LinkPrevue,
         },
         setup(props, context) {
+            const store = inject('store')
+
+            const link = computed(() => {
+                let testUrl = props.content.match(/https?:[^\s]+/)
+                return testUrl && testUrl[0];
+            })
+            // https://www.goodreads.com/book/show/40961427-1984
+
+
+            const selfVoted = computed(() =>
+                props.votes.includes(store.user)
+            )
+
             return {
-                b: classBuilder('idea-card')
+                b: classBuilder('idea-card'),
+                link,
+                selfVoted,
             }
         }
     }
@@ -25,15 +40,15 @@
         <div :class="b`grid`">
             <span :class="b`text`">{{content}}</span>
             <div :class="b`right`">
-                <LinkPrevue url="https://www.goodreads.com/book/show/40961427-1984"></LinkPrevue>
+                <LinkPrevue v-if="link" :url="link"/>
             </div>
         </div>
 
         <div :class="b`voters-container`">
-            <div :class="b`vote-btn`">
+            <button :class="[b`vote-btn`, selfVoted?b`vote-btn-active`:'']" >
                 <span>{{votes.length}}</span>
                 <img :class="b`life-saver-icon`" src="red-life-saver.ico" alt="Italian Trulli">
-            </div>
+            </button>
             <span :class="b`voter`" v-for="vote in votes" :key="vote">
                 {{vote}}.
             </span>
@@ -72,6 +87,11 @@
         padding: 5px;
         border: 1px rgb(216 215 215) solid;
         border-radius: 40%;
+        background: white;
+    }
+    .idea-card_vote-btn-active {
+        border: 0;
+        background: #90d5ff;
     }
     .idea-card_life-saver-icon {
         margin-left: 2px;
