@@ -16,7 +16,7 @@
             const store = inject('store')
 
             const wssUrl = location.origin.includes('https:')
-                ? location.origin.replace('https:', 'ws:')
+                ? location.origin.replace('https:', 'wss:')
                 : 'ws://localhost:5000'
 
             const webSocket = new WebSocket(wssUrl);
