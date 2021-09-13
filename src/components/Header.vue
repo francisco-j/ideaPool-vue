@@ -8,10 +8,12 @@
             const userInput = ref('');
 
             const logout = () => {
+                localStorage.removeItem('idea-pool-user')
                 store.user = null
             }
 
             const login = () => {
+                localStorage.setItem('idea-pool-user', userInput.value)
                 store.user = userInput.value
             }
 
